@@ -1,6 +1,9 @@
 *.log
 *.save
 *.rpyc
+*.rpyb
 log.txt
 errors.txt
 traceback.txt
+game/saves/
+game/cache/shaders.txt
