@@ -1,20 +1,24 @@
 ﻿# Инициализация персонажа
 label init_my_character:      
     $ choice = "молодого"   
-    label choice_my_character:   #выбор внешности игрока
-        $ me_old_img = "me man"        
+    $ my_type = "man" 
+    label choice_my_character:   #выбор внешности игрокаR               
         menu:        
             "парень" :
                 show me man at left  
                 $ choice = "молодого"       
-                $ me_old_img = "me man"    
+                $ my_type = "man"  
+                $ stat_money = 250  
             "старик":
                 show me oldman at right
                 $ choice = "пожилого" 
-                $ me_old_img = "me oldman"  
+                $ my_type = "oldman"  
+                $ stat_money = 1000
             "подтвердить выбор":
                 hide me with fade  
                 $ renpy.notify ("Вы выбрали " + str(choice))
+                image me_img = "images/me "+"[my_type]" + ".png"
+                image me_big = "images/me "+"[my_type]" + " big.png"
                 jump choice_my_name
         jump choice_my_character
     return    
@@ -31,12 +35,11 @@ return
 
 #========================= НАЧАЛО ИГРЫ
 label start:
-
-    scene bg london
+    scene bg city
 
     show rain
     with fade
-    pause(0.5)    
+    pause(0.5)  
 
     #====тестовые блоки
     #==================
@@ -45,7 +48,11 @@ label start:
     pause(1.0)
     call init_my_character
 
-    "Кажется этот чертов дождь никогда не закончится."
+    # запускаем эпизоды по порядку
+    jump ep001_stavka
+
+
+    "Кажется этот чертов дождь никогда не закончится."    
     "Мне нужно закончить одно дело."
 
     menu:
@@ -54,7 +61,7 @@ label start:
         "Продолжить путь":            
             me "Сегодня я уже достаточно потратил денег"
 
-    # запускаем эпизоды по порядку
+    
     call ep_alice
 
 
