@@ -8,12 +8,14 @@ label init_my_character:
                 show me man at left  
                 $ choice = "молодого"       
                 $ my_type = "man"  
-                $ stat_money = 250  
+                #$ stat_money = 250  
+                $ room1_secret_money = 250 #деньги в тайнике, которые гг сможет забрать
             "старик":
                 show me oldman at right
                 $ choice = "пожилого" 
                 $ my_type = "oldman"  
-                $ stat_money = 1000
+                #$ stat_money = 1000
+                $ room1_secret_money = 1000
             "подтвердить выбор":
                 hide me with fade  
                 $ renpy.notify ("Вы выбрали " + str(choice))
