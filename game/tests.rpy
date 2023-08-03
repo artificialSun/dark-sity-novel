@@ -13,11 +13,57 @@ label test_inventory:
     "выкидываю 9 таблеток"
     $ some_invent.remove_item("cureSleep", 9)
     $ some_invent.show_all()
-    "получаю деньги"
+    "получаю деньги 101"
     $ some_invent.add_item("money", 101)
     $ some_invent.show_all()
-    "получаю еще деньги"
+    "получаю еще деньги 10"
     $ some_invent.add_item("money", 10)
+    $ some_invent.show_all()
+    "забираю деньги 11$ в стат"
+    $ some_invent.take_money(False, 11)
+    $ some_invent.show_all()
+    "забираю оставшиеся деньги в стат"
+    $ some_invent.take_money()
+    $ some_invent.show_all()
+    "пытаюсь забрать еще 100 денег в стат"
+    $ some_invent.take_money(100)
+    $ some_invent.show_all()
+    "кладу деньги в инвентарь"
+    $ some_invent.put_money(10)
+    $ some_invent.show_all()
+    "пытаюсь положить в инвентарь больше, чем у меня есть (500)"
+    $ some_invent.put_money(500)
+    $ some_invent.show_all()
+    "убираю все деньги из инвентаря"
+    $ count1 = some_invent.remove_all("money")
+    "из было [count1]"
+    $ some_invent.show_all()
+
+    "создаю второй инвентарь"
+    default some_invent2 = Inventory({"cureSleep": 20})
+    $ some_invent2.show_all()
+    "пытаюсь переложить из второго инвентаря в 1й 10 таблеток"
+    $ some_invent2.give_away(some_invent, "cureSleep", False, 10)
+    "содержимое 2 инв:"
+    $ some_invent2.show_all()
+    "содержимое 1 инв:"
+    $ some_invent.show_all()
+    "сколько денег в 1м ящике?"
+    $ aaa = some_invent.how_mutch("money")
+    "[aaa]"
+    "пытаюсь переложить все деньги из 1го во 2й"
+    $ some_invent.give_away(some_invent2, "money")
+    "перекладываю кинжал из 1го во 2й"
+    $ some_invent.give_away(some_invent2, "myDagger")
+    "содержимое 2 инв:"
+    $ some_invent2.show_all()
+    "содержимое 1 инв:"
+    $ some_invent.show_all()
+    "перекладываю все таблетки из 1го во 2й"
+    $ some_invent.give_away(some_invent2, "cureSleep")
+    "содержимое 2 инв:"
+    $ some_invent2.show_all()
+    "содержимое 1 инв:"
     $ some_invent.show_all()
 
     

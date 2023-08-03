@@ -114,14 +114,23 @@ label change_stat(statname, sum):
     return True
 
 #проверка наличия денег
+init python:
+    def money_enough(sum):
+        if sum > stat_money:
+            renpy.notify("У вас недостаточно денег! На вашем счету " + str(stat_money) + "$")
+            renpy.pause(0.5)
+            return False
+        return True
+
 label money_enough(sum):
     if sum > stat_money:
         $ renpy.notify("У вас недостаточно денег! На вашем счету " + str(stat_money) + "$")
         pause(0.5)
         $ is_money_enough = False
+        return False
     else:
         $ is_money_enough = True
-    return
+    return True
 
 
 label show_stats:

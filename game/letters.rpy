@@ -16,9 +16,9 @@ screen letter(message, author = "me"):
     vbox:
         xsize 1000
         ysize 600
-        xalign 0.2
-        yalign 0.1
-        text "[message]" xalign 0.5 yalign 0.3
+        xalign 0.5
+        yalign 0.5
+        text "{color=#330000}{size=+6}[message]{/size}{/color}" xalign 0.5 yalign 0.3
         
     textbutton "ПРОЧИТАНО" action Hide("letter") xalign 0.5 yalign 0.95
 

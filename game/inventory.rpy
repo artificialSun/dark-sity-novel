@@ -6,7 +6,7 @@ $ my_choises = []
 #=======================================================================================
 #================================================= ОБЪЯВЛЕНИЕ ЛИЧНОГО ИНВЕНТАРЯ И ТАЙНИКОВ
 label init_inventoryes:
-    $ my_inventory = Inventory({"cureSleep",6})  
+    $ my_inventory = Inventory({"cureSleep" : 6})  
 
     # в тайниках можно хранить деньги и предметы и не таскать их с собой
     $ room1_secret = Inventory({"myDagger": 1, "money": room1_secret_money}) 
@@ -29,13 +29,16 @@ init python:
         #добавить свойство, через которое прямо объект получать можно будет и его свойства
 
 
-        def add_item(self, item_key, count = 1):  #должна принимать объекты типа ключ all_items_dict и количество (по умолчанию 1)
+        def add_item(self, item_key, count = 1, notify=True):  #должна принимать объекты типа ключ all_items_dict и количество (по умолчанию 1)
+            if count < 1:   #может оказаться вызов с 0
+                return False
             item_name = all_items_dict[item_key].name # получаем имя объекта на русском
-            if item_key in self.inv_items:
-                self.inv_items[item_key] += count
-            else:
-                self.inv_items[item_key] = count
-            renpy.notify("добавлено "+item_name)
+
+            count += self.how_mutch(item_key) #посчитали сколько предметов всего будет c теми которые есть 
+            self.inv_items[item_key] = count  #обновим значение
+            if notify:
+                renpy.notify("добавлено "+str(count)+" "+item_name)
+            return True
 
         def remove_item(self, item_key, count=1):     #должна принимать объекты типа ключ all_items_dict и количество (по умолчанию 1)
             item_name = all_items_dict[item_key].name # получаем имя объекта на русском
@@ -50,7 +53,9 @@ init python:
             else:
                 renpy.notify("У вас нет предмета "+item_name)
 
-        def take_money(self, all = True, count = 0):  #позволяет забрать деньги из хранилища или у персонажа из инвентаря и добавить себе в стат
+        # #позволяет забрать деньги из хранилища или у персонажа из инвентаря и добавить себе в стат
+        # по умолчанию забираем все, но если all=false, то забираем количество
+        def take_money(self, all = True, count = 0): 
             if "money" in self.inv_items:
                 if all or (all==False and count==self.inv_items["money"]):
                     change_stat("m", self.inv_items["money"])
@@ -66,7 +71,8 @@ init python:
 
     
         def put_money(self, count): #положить деньги из стата в инвентарь
-            if change_stat("m", (-1)*count):
+            if money_enough(count):
+                change_stat("m", (-1)*count)
                 if "money" in self.inv_items:
                     self.inv_items["money"] += count
                 else:
@@ -75,32 +81,27 @@ init python:
             else:
                 return False
 
-        def remove_all (self, item_key) #убрать все предметы одного вида и получить их количество
-            count = 0 
-            if item_key in self.inv_items:  # выяснили 
-                count = self.inv_items[item_key]
-            
-            del self.inv_items[item_key]
+        def remove_all (self, item_key): #убрать все предметы одного вида и получить их количество
+            count = self.how_mutch(item_key)
+            if count > 0:  # выяснили 
+                #count = self.inv_items[item_key]            
+                del self.inv_items[item_key]
             return count
 
-
-#######
-        
-        def give_away(self, item_key, another_inv):    #переложить объект из одного инвентаря в другой селф - откуда         
-            count = 0
-            if item_key in self.inv_items:  # выяснили 
-                count = self.inv_items[item_key]
-            
-            if item_key in another_inv.inv_items:
-                another_inv.inv_items[item_key] += count
-            else
-                another_inv.inv_items[item_key] = count
-
-                another_inv.add_item(self.inv_items[item_key])
+        # переложить объект из одного инвентаря в другой селф - откуда         
+        def give_away(self, another_inv, item_key, all = True, count = 0):    
+            if all:
+                count = self.remove_all(item_key)
+                #renpy.say("dd","[count]")
+                another_inv.add_item(item_key, count) 
+                return count               
             else:
-                return 0
-
-######            
+                if self.how_mutch(item_key) >= count:
+                    self.remove_item(item_key, count)
+                    another_inv.add_item(item_key, count)
+                    return count
+            return 0
+        
 
         def how_mutch(self, item_key):
             if item_key in self.inv_items:
