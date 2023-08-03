@@ -44,11 +44,15 @@ label start:
     pause(0.5)  
 
     #====тестовые блоки
+    #call test_inventory
     #==================
 
     $ renpy.notify("Твое приключение начинается здесь, но сначала выбери персонажа")
     pause(1.0)
+    
     call init_my_character
+
+    call init_inventoryes
 
     # запускаем эпизоды по порядку
     jump ep001_stavka

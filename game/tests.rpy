@@ -1,5 +1,34 @@
+########тестирование инвентаря
+label test_inventory:
+    "это тест инвентаря"
+    "создаю инвентарь"
+    default some_invent = Inventory({"myDagger": 1, "cureSleep": 10})
+    $ some_invent.show_all()
+    "ем 1 таблетку"
+    $ some_invent.remove_item("cureSleep")
+    $ some_invent.show_all()
+    "пытаюсь выкинуть 11 таблеток"
+    $ some_invent.remove_item("cureSleep", 11)
+    $ some_invent.show_all()
+    "выкидываю 9 таблеток"
+    $ some_invent.remove_item("cureSleep", 9)
+    $ some_invent.show_all()
+    "получаю деньги"
+    $ some_invent.add_item("money", 101)
+    $ some_invent.show_all()
+    "получаю еще деньги"
+    $ some_invent.add_item("money", 10)
+    $ some_invent.show_all()
+
+    
+return
 
 
+
+
+
+
+#####тестирование вложенности label
 label test_block:
     me "it is test1"
 
@@ -27,3 +56,4 @@ label test2:
     me "блаблабала"
     return
 return
+
