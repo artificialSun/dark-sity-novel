@@ -1,3 +1,7 @@
+init:
+    $ stavka_num = ""
+    $ roulette_order_num = 1000
+    $ roulette_luck_36 = False #особая удачная ставка сюжетная в течение суток с момента получения записки
 # экран рулетки
 screen roulette(): 
     imagemap:
@@ -63,10 +67,22 @@ label set_stavka:
 
     "ставка принята [stavka]$ на [stavka_num]"    
 
-    call change_stat('m', (-1*stavka))
+    $ change_stat('m', (-1*stavka))
     
     #бросок шарика. -1 это 00    
     $ res_roulette_num = renpy.random.randint(-1, 36)
+
+    # проверка особых условий выигрыша 1го дня
+    if roulette_luck_36:
+        $ count_days = timer_luch_36.how_long("d")  #таймер с момента получения записки (не более 24 часов должен быть 1440 мин)
+        if count_days > 1:
+            $ renpy.notify("Вы опоздали. Прошло более 24 часов с получения записки")
+            $ roulette_luck_36 = False
+        else:
+            if stavka == 15 and stavka_num == 36:
+                $ res_roulette_num = 36
+                $ roulette_luck_36 = False
+
 
     "результат броска: [res_roulette_num]"    
     
@@ -109,7 +125,7 @@ label set_stavka:
     if roulette_profit > 0:
         "Вы выиграли!"
         "Ваш выигрыш [roulette_profit]$"
-        call change_stat('m', roulette_profit)
+        $ change_stat('m', roulette_profit)
     else:
         "К сожалению, вы проиграли"              
 
@@ -125,7 +141,7 @@ label roulette:
     pause 1.0
     "Сделать ставку?"
 
-    label roulette_menu:
+    label .roulette_menu:
         menu:            
             "Сделать ставку?"
             "Да":   
@@ -136,7 +152,7 @@ label roulette:
                 if stavka == "":
                     jump roulette_menu
 
-                call money_enough(stavka)
+                $ is_money_enough = money_enough(stavka)
 
                 if (is_money_enough):
                     $ renpy.notify("Ваша ставка "+str(stavka)+ "$")
@@ -145,7 +161,7 @@ label roulette:
 
                     "ставка принята"
 
-                jump roulette_menu
+                jump roulette.roulette_menu
 
             "Нет":
                 menu:
@@ -157,10 +173,9 @@ label roulette:
 
                         return
                     "Нет":
-                        jump roulette_menu
+                        jump roulette.roulette_menu
                 
         return
-
 
     jump roulette
 

@@ -11,10 +11,11 @@ init python:
 # Главный герой
 default my_type = "man" #параметр используется для подбора картинки в зависимости от выбора персонажа. me man - молодой мужчина, me oldman - пожилой мужчина
 default mу_name = _("Фрэнк")
+image my_room = "images/my_room1.jpg"  #стартовая комната где живет персонаж, изображение
 
 default me = Character("[my_name]", color="#dfbe03", image="me "+"[my_type]")
 
-image my_room = "images/my_room1.jpg"    
+   
 
 
 # Определение персонажей игры. ======= перенести в соответствующие блоки
@@ -34,15 +35,14 @@ init:
     $ stat_ratio = 0
 
     $ stat_health = 200
-    $ max_health = 200
+    $ stat_health_max = 200
 
-    $ stat_mind = 50
-    $ max_mind = 200
-    $ max_mad = 200
+    $ stat_mind = 50 #от -200 до 200 меньше 0 это уже разные степени безумия
+    $ stat_mind_max = 200
+    $ stat_mad_max = 200
 
     #мини-игры
-    $ stavka_num = ""
-    $ roulette_order_num = 1000
+
     
 
 
@@ -83,36 +83,6 @@ init python:
         return True
 
 
-# изменение статистик 
-label change_stat(statname, sum):
-    if statname == "m" :                
-        if sum > 0:
-            $ renpy.notify("Вы получили" + str(sum) + "$")
-        elif sum < 0:
-            $ renpy.notify("Потрачено " + str(sum*(-1)) + "$")
-        $ stat_money += sum
-        $ renpy.notify("Ваш капитал: " + str(stat_money) + "$")
-    elif statname == "g" :
-        $ stat_good += sum
-        $ renpy.notify("Хорошая репутация" + str(sum) + "$")
-    elif statname == "b" :
-        $ stat_bad += sum
-    elif statname == "s" :
-        $ stat_strong += sum
-    elif statname == "r" :
-        $ stat_ratio += sum
-    elif statname == "h":
-        $ stat_health += sum
-        if stat_health < 60:
-            $ renpy.notify('Вы плохо себя чувствуете, пора обратиться к врачу')
-        elif stat_health < 0:
-            $ renpy.notify('Вы потеряли сознание')            
-    elif statname == "md":
-        $ stat_mind += sum
-        if stat_mind < 0:
-            $ renpy.notify('Вы начинаете сходить с ума')
-    return True
-
 #проверка наличия денег
 init python:
     def money_enough(sum):
@@ -122,18 +92,7 @@ init python:
             return False
         return True
 
-label money_enough(sum):
-    if sum > stat_money:
-        $ renpy.notify("У вас недостаточно денег! На вашем счету " + str(stat_money) + "$")
-        pause(0.5)
-        $ is_money_enough = False
-        return False
-    else:
-        $ is_money_enough = True
-    return True
-
-
-label show_stats:
+label show_stats:  
     $ renpy.notify("деньги: " + str(stat_money) + "$ \n"
     "хорошая репутация: " + str(stat_good) +
     "\nдурная слава: " + str(stat_bad) +
@@ -143,61 +102,109 @@ label show_stats:
     pause(4)
 
 
-#===================ВРЕМЯ
-init:  
-    $ hour_start = 6  #стартовое время 7 утра
-    $ minut_start = 50 
+#===================ВРЕМЯ старая система
+#init:  
+    #$ hour_start = 6  #стартовое время 7 утра
+    #$ minut_start = 50 
 
-    $ hours_actual = hour_start  #текущее время
-    $ minutes_actual = minut_start 
+    #$ hours_actual = hour_start  #текущее время
+    #$ minutes_actual = minut_start 
 
-    $ g_hours = 0  #игровое время в часах
-    $ g_minutes = 0   #минуты, не вошедшие в час
+    #$ g_hours = 0  #игровое время в часах
+    #$ g_minutes = 0   #минуты, не вошедшие в час
+
+label init_global_timer:
+    $ global_time = Global_time(6, 50)
+
+init python: 
+    class Global_time(object):
+        def __init__(self, hours_start = 0, minutes_start = 0):
+            self.hours_start = hours_start    # запомним стартовое время внутри игры на начало игры
+            self.minutes_start = minutes_start
+            self.hours_actual = hours_start    # актуальное время на часах внутри игры
+            self.minutes_actual = minutes_start  
+            self.g_hours = 0 #игровое время внутри игры - сколько часов и минут персонаж прожил с момента начала игры
+            self.g_minutes = 0
+
+        def day_postfix(num):
+            if num == 1:
+                return "день"
+            elif num in [2, 3, 4]:
+                return "дня"
+            else:
+                return "дней"
+
+        def get_days(self, hours):
+            return hours // 24    
+
+        def show_game_time():  #показать сколько времени прошло с начала игры для персонажа (дни и часы)
+            d = self.get_days()
+            h = self.g_hours % 24
+            part1 = ""
+            if d > 0:
+                part1 = str(d) + " " + day_postfix(d % 10)
+            renpy.notify("Прошло "+ part1 +" " + str(h)+ " ч.")     
+
+        def add_time(self, prefix, sum): #добавление времени минут, часов или дней
+            #global self.g_minutes, self.g_hours
+            if prefix == "m":
+                self.g_minutes += sum
+                if self.g_minutes > 59:
+                    self.add_time("h", self.g_minutes // 60)
+                    self.g_minutes %= 60
+            elif prefix == "h":
+                self.g_hours += sum
+            elif prefix == "d":
+                self.g_hours += sum*24
+            
+        def show_time(self): #показать текущее время в игровом мире
+            self.actual_time()
+            renpy.notify("Текущее время: " + str(self.hours_actual)+" ч. "+ str(self.minutes_actual)+ " .мин")
+
+        def actual_time(self):  #актуализировать текущее время в игровом мире (исходя их времени, которое прожил персонаж с начала игры)
+            #global minutes_actual, hours_actual
+            self.minutes_actual = self.g_minutes + self.minutes_start
+            ost = self.minutes_actual // 60 #0 если нет переполнения минут при складывании со стартовым временем
+            self.minutes_actual %= 60 # чтобы было не больше 60
+            self.hours_actual = (self.g_hours + self.hours_start + ost) % 24
+
+        #def is_equal_delta(self, hour, minutes):
+
 
 
 init python:   
-    def day_postfix(num):
-        if num == 1:
-            return "день"
-        elif num in [2, 3, 4]:
-            return "дня"
-        else:
-            return "дней"
+    #отметка времени - объекты нужны для учета, сколько глобально прошло времени с какого-то конкретного события, для этого события создается метка времени
+    #отметка создается в абсолютном времени (сколько персонаж прожил с начала игры)
+    class Time_mark(object):
+        def __init__(self, global_time):             
+            self.hour = global_time.g_hours
+            self.minutes = global_time.g_minutes
+            self.in_minutes = global_time.g_hours*60 + global_time.g_minutes
+            #на всякий случай запоминаем игровое время
+            global_time.actual_time()
+            self.hours_clock = global_time.hours_actual
+            self.minutes_clock = global_time.minutes_actual
+
+        # узнать сколько времени прошло с момента метки
+        def how_long(self, prexix, global_time): #в префикс передаются обозначения m h d  - минуты, часы, дни соответственно
+            #переведем все в минуты
+            global_min = global_time.g_hours*60 + global_time.g_minutes
+            time = global_min - self.in_minutes #разница в минутах
+            if prefix == "m":
+                return time
+            elif prefix == "h":
+                return time // 60
+            elif prefix == "d":
+                return (time // 60) // 24
+            else:
+                renpy.notify("невозможно выполнить операцию")
+                return 0
+
+
+
+
+
     
-    def get_days(hours):
-        return hours // 24    
-
-    def show_game_time():
-        d = get_days()
-        h = g_hours % 24
-        part1 = ""
-        if d > 0:
-            part1 = str(d) + " " + day_postfix(d % 10)
-        renpy.notify("Прошло "+ part1 +" " + str(h)+ " ч.")     
-
-    def add_time(prefix, sum): #добавление времени минут, часов или дней
-        global g_minutes, g_hours
-        if prefix == "m":
-            g_minutes += sum
-            if g_minutes > 59:
-                add_time("h", g_minutes // 60)
-                g_minutes %= 60
-        elif prefix == "h":
-            g_hours += sum
-        elif prefix == "d":
-            g_hours += sum*24
-        
-
-    def show_time():
-        actual_time()
-        renpy.notify("Текущее время: " + str(hours_actual)+" ч. "+ str(minutes_actual)+ " .мин")
-
-    def actual_time():
-        global minutes_actual, hours_actual
-        minutes_actual = g_minutes + minut_start
-        ost = minutes_actual // 60 #0 если нет переполнения минут при складывании со стартовым временем
-        minutes_actual %= 60 # чтобы было не больше 60
-        hours_actual = (g_hours + hour_start + ost) % 24
 
 
 

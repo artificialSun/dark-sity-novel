@@ -2,6 +2,7 @@
 label init_my_character:      
     $ choice = "молодого"   
     $ my_type = "man" 
+    $ room1_secret_money = 250 #деньги в тайнике, которые гг сможет забрать
     label choice_my_character:   #выбор внешности игрокаR               
         menu:        
             "парень" :
@@ -38,6 +39,7 @@ return
 #========================= НАЧАЛО ИГРЫ
 label start:
     scene bg city
+    show screen disklamer
 
     show rain
     with fade
@@ -46,17 +48,20 @@ label start:
     #====тестовые блоки
     # call test_inventory
     # show screen letter("Это больльшой тестовый текст записки \n можно мне этих вкусных пончиков?", "me")
+    
     #==================
 
     $ renpy.notify("Твое приключение начинается здесь, но сначала выбери персонажа")
     pause(1.0)
-    
+
     call init_my_character
 
     call init_inventoryes
 
+    call init_global_timer
+
     # запускаем эпизоды по порядку
-    jump ep001_stavka
+    jump ep001_wakeup
 
 
     "Кажется этот чертов дождь никогда не закончится."    
