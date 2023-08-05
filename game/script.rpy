@@ -39,6 +39,22 @@ return
 #========================= НАЧАЛО ИГРЫ
 label start:
     scene bg city
+
+    call init_morg_mini_game
+    $ generate_morg()
+    "сейчас открою экран с моргом"
+    show screen morg_mini_game
+    "открыли, надо взаимодействовать"
+    "генерирую новых"
+    $ generate_morg()
+    "генерирую новых"
+    $ generate_morg()
+    "генерирую новых"
+    $ generate_morg()
+    "text"
+    "text"
+    "text"
+
     show screen disklamer
 
     show rain

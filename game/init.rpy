@@ -186,7 +186,7 @@ init python:
             self.minutes_clock = global_time.minutes_actual
 
         # узнать сколько времени прошло с момента метки
-        def how_long(self, prexix, global_time): #в префикс передаются обозначения m h d  - минуты, часы, дни соответственно
+        def how_long(self, prefix, global_time): #в префикс передаются обозначения m h d  - минуты, часы, дни соответственно
             #переведем все в минуты
             global_min = global_time.g_hours*60 + global_time.g_minutes
             time = global_min - self.in_minutes #разница в минутах

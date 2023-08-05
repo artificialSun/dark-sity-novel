@@ -74,12 +74,12 @@ label set_stavka:
 
     # проверка особых условий выигрыша 1го дня
     if roulette_luck_36:
-        $ count_days = timer_luch_36.how_long("d")  #таймер с момента получения записки (не более 24 часов должен быть 1440 мин)
+        $ count_days = timer_luch_36.how_long("d", global_time)  #таймер с момента получения записки (не более 24 часов должен быть 1440 мин)
         if count_days > 1:
             $ renpy.notify("Вы опоздали. Прошло более 24 часов с получения записки")
             $ roulette_luck_36 = False
         else:
-            if stavka == 15 and stavka_num == 36:
+            if stavka == 15 and stavka_num == 'номер 36':
                 $ res_roulette_num = 36
                 $ roulette_luck_36 = False
 
@@ -130,7 +130,7 @@ label set_stavka:
         "К сожалению, вы проиграли"              
 
     pause(1.0)
-    jump roulette_menu          
+    jump roulette.roulette_menu          
 
 
 #===========================СЦЕНА С РУЛЕТКОЙ
