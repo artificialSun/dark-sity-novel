@@ -1653,6 +1653,28 @@ style disklamer_text:
     size 20
     xalign 0.5
     #font "DejaVuSans.ttf"
+
+
+## Экран Info ###################################################################
+##
+## Этот экран используется когда игроку нужно сообщить какую-то информацию с подтверждением, что он прочитал
+##
+##    
+screen info_many_strings(text_array):
+    tag menu
+    modal True
+    zorder 10
+
+    frame:
+        align (0.5, 0.5)
+        padding(20, 20)
+
+        vbox:
+            align (0.5, 0.5)
+            for t in text_array:
+                text t align (0.5, 0.5)
+            null height 15
+            textbutton "ОК" action Hide("info_many_strings") align (0.5, 0.5)
     
 
     

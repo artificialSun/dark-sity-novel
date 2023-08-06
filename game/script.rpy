@@ -40,7 +40,9 @@ return
 label start:
     scene bg city
 
-    call init_morg_mini_game
+    call start_game_morg
+    #call init_morg_mini_game
+    "вышел из блока игры в морг"
     $ generate_morg()
     "сейчас открою экран с моргом"
     show screen morg_mini_game

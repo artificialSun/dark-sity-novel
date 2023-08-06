@@ -15,7 +15,14 @@ image my_room = "images/my_room1.jpg"  #стартовая комната где
 
 default me = Character("[my_name]", color="#dfbe03", image="me "+"[my_type]")
 
-   
+default my_av_zp = 0 #средняя зарплата, станет больше 0 после того, как персонаж сходит на работу
+default my_can_skip_work = {
+    "morg": False,
+    "shop": False
+}
+default my_boss_kind = boss_kind["good"]
+
+
 
 
 # Определение персонажей игры. ======= перенести в соответствующие блоки
