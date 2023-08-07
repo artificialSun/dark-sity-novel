@@ -35,6 +35,7 @@ define jul = Character('Джулия', color="#c1ff15", image='juli') #Джул�
 
 init:
     $ left2 = Position(xalign=0.99, yalign = 1)
+    $ boss_position_right = Position(xalign=0.95, yalign = 1.5)
 
     #статы
     $ stat_money = 0
@@ -50,9 +51,14 @@ init:
     $ stat_mind_max = 200
     $ stat_mad_max = 200
 
-    #мини-игры
+#сводка выборов, которые на что-то влияют
 
+init python: 
+    my_choises = {
+        "ep001_whiskey_drink" : False
+    }
     
+
 
 
 
@@ -214,7 +220,7 @@ init python:
                 renpy.notify("невозможно выполнить операцию")
                 return 0
 
-        def get_time(self, textmark = "Время метки: "): #показать время на часах, которое соответствует мете
+        def get_time(self, textmark = ""): #показать время на часах, которое соответствует мете
             return textmark + str(self.hours_clock)+" ч. "+ str(self.minutes_clock)+ " .мин"
 
         def equel_with_delta(self, delta = 0): #дельта указывается в минутах

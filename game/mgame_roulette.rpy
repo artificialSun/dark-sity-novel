@@ -146,7 +146,8 @@ label roulette:
             "Сделать ставку?"
             "Да":   
                 show casino_dop 
-                with fade                             
+                with fade  
+                $ global_time.add_time("m", 10)                           
                 $ stavka = int(renpy.input("Введите размер ставки", length = 10, default = "50", allow = "0123456789").strip())
 
                 if stavka == "":
@@ -193,6 +194,8 @@ label go_casino:
     scene bg casino int2
     with fade
     pause(0.5)
+
+    $ global_time.add_time("m", 25)
 
     show juli casino at right
     with dissolve

@@ -43,7 +43,7 @@ label start:
     call init_global_timer
 
 #tests
-    call test_morg_first_day     
+    #call test_morg_first_day     
     #call start_game_morg
     #call init_morg_mini_game
 
@@ -56,6 +56,18 @@ label start:
     pause(0.5)  
 
     #====тестовые блоки
+    #"hhhhh1"
+    #image boss_img = "images/boss bad.png"    
+    #"вот сейчас выведу сцуко картинку"
+    #show boss_img at right
+    #show me_img at left
+    #"смотри сюда блин"
+    #hide boss_img
+    #image boss_img2 = "images/boss good.png"
+    #"вот сейчас выведу сцуко картинку"
+    #show boss_img2 at right
+    #"fhjkdshfjg"
+    #"hfdskjgf"
     # call test_inventory
     # show screen letter("Это больльшой тестовый текст записки \n можно мне этих вкусных пончиков?", "me")
     
