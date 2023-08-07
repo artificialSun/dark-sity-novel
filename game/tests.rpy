@@ -1,3 +1,16 @@
+label test_morg_first_day:
+    "блок тестирования первого дня"
+    $ global_time.show_time()
+    $ my_job_timemark = Time_mark(global_time, 0, 2, 10) #на работу к 9
+    $ t = my_job_timemark.get_time
+    $ global_time.add_time("h", 3)
+    $ my_boss_kind = boss_kind["good"]
+    call morg_first_day
+    return
+
+
+
+
 ########тестирование инвентаря без оболочки
 label test_inventory:
     "это тест инвентаря"

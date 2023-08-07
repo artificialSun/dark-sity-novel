@@ -40,22 +40,14 @@ return
 label start:
     scene bg city
 
-    call start_game_morg
+    call init_global_timer
+
+#tests
+    call test_morg_first_day     
+    #call start_game_morg
     #call init_morg_mini_game
-    "вышел из блока игры в морг"
-    $ generate_morg()
-    "сейчас открою экран с моргом"
-    show screen morg_mini_game
-    "открыли, надо взаимодействовать"
-    "генерирую новых"
-    $ generate_morg()
-    "генерирую новых"
-    $ generate_morg()
-    "генерирую новых"
-    $ generate_morg()
-    "text"
-    "text"
-    "text"
+
+  
 
     show screen disklamer
 
@@ -76,7 +68,7 @@ label start:
 
     call init_inventoryes
 
-    call init_global_timer
+    
 
     # запускаем эпизоды по порядку
     jump ep001_wakeup

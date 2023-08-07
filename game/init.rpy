@@ -22,6 +22,8 @@ default my_can_skip_work = {
 }
 default my_boss_kind = boss_kind["good"]
 
+#default my_job_timemark #метка к какому времени нужно попасть на работу
+
 
 
 
@@ -109,7 +111,7 @@ label show_stats:
     pause(4)
 
 
-#===================ВРЕМЯ старая система
+#===================ВРЕМЯ 
 #init:  
     #$ hour_start = 6  #стартовое время 7 утра
     #$ minut_start = 50 
@@ -182,21 +184,26 @@ init python:
 init python:   
     #отметка времени - объекты нужны для учета, сколько глобально прошло времени с какого-то конкретного события, для этого события создается метка времени
     #отметка создается в абсолютном времени (сколько персонаж прожил с начала игры)
+    #с вариацией "метка в будущем"
     class Time_mark(object):
-        def __init__(self, global_time):             
-            self.hour = global_time.g_hours
-            self.minutes = global_time.g_minutes
-            self.in_minutes = global_time.g_hours*60 + global_time.g_minutes
-            #на всякий случай запоминаем игровое время
-            global_time.actual_time()
-            self.hours_clock = global_time.hours_actual
-            self.minutes_clock = global_time.minutes_actual
+        def __init__(self, global_time, future_plus_day = 0, future_plus_hours = 0, future_plus_mins = 0):             
+            self.minutes = global_time.g_minutes + future_plus_mins
+            self.hours = global_time.g_hours + future_plus_day*24 + future_plus_hours + self.minutes // 60 
+            self.minutes %= 60           
+            self.in_minutes = self.hours*60 + self.minutes
+            #на всякий случай запоминаем игровое время (пока не работает для метки будущего)
+            # актуальное время игровой метки:
+            self.minutes_clock = self.minutes + global_time.minutes_start
+            ost = self.minutes_clock // 60 #0 если нет переполнения минут при складывании со стартовым временем
+            self.minutes_clock %= 60 # чтобы было не больше 60
+            self.hours_clock = (self.hours + global_time.hours_start + ost) % 24
 
-        # узнать сколько времени прошло с момента метки
+
+        # узнать сколько времени прошло с момента метки  #отрицательное число будет означать сколько времени осталось до метки
         def how_long(self, prefix, global_time): #в префикс передаются обозначения m h d  - минуты, часы, дни соответственно
             #переведем все в минуты
-            global_min = global_time.g_hours*60 + global_time.g_minutes
-            time = global_min - self.in_minutes #разница в минутах
+            global_mins = global_time.g_hours*60 + global_time.g_minutes
+            time = global_mins - self.in_minutes #разница в минутах
             if prefix == "m":
                 return time
             elif prefix == "h":
@@ -206,6 +213,21 @@ init python:
             else:
                 renpy.notify("невозможно выполнить операцию")
                 return 0
+
+        def get_time(self, textmark = "Время метки: "): #показать время на часах, которое соответствует мете
+            return textmark + str(self.hours_clock)+" ч. "+ str(self.minutes_clock)+ " .мин"
+
+        def equel_with_delta(self, delta = 0): #дельта указывается в минутах
+            difference = self.how_long
+            if difference >= (-1)*delta and difference <= delta:
+                return True
+            return False
+
+
+
+
+
+        
 
 
 
