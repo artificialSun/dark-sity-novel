@@ -154,11 +154,11 @@ label ep001_gowork:
     menu:
         "Я работаю в "
         "Магазине":
-            $ me.job = "shop"
-            $ renpy.notify("Магазин закрыт, так что ты работаешь в морге!")
+            $ my_job = "shop"
+            #$ renpy.notify("Магазин закрыт, так что ты работаешь в морге!")
 
         "Морге":
-            $ me.job = "morg"
+            $ my_job = "morg"
 
     menu:
         "Мой начальник"
@@ -171,7 +171,10 @@ label ep001_gowork:
     call init_boss
 
     #XX здесь будет проверка, на какой работе ты работаешь
-    call morg_first_day     
+    if my_job == "morg":
+        call morg_first_day     
+    elif my_job == "shop":
+        call shop_first_day
     
     scene bg police with fade
     #show rain with dissolve

@@ -30,6 +30,7 @@ default my_boss_kind = boss_kind["good"]
 # Определение персонажей игры. ======= перенести в соответствующие блоки
 define al = Character('Эллис', color="#e7461e", image='alice')
 define jul = Character('Джулия', color="#c1ff15", image='juli') #Джулия девушка из казино
+define pokupatel = Character('Покупатель', color="#55ebff", image='juli') #Джулия девушка из казино
 
 
 

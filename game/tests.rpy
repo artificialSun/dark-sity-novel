@@ -1,4 +1,14 @@
-label test_morg_first_day:
+label test_shop_job:
+    "тестирование магазина"
+    $ my_can_skip_work["shop"] = False
+    $ my_name = "Фрэнк"
+    call start_game_shop_job
+    #show screen shop_mini_game
+    #"почему мы продаем ножницы в бакалее?"
+    return
+
+
+label test_morg_first_day:    
     "блок тестирования первого дня"
     $ global_time.show_time()
     $ my_job_timemark = Time_mark(global_time, 0, 2, 10) #на работу к 9

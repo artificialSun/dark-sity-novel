@@ -56,6 +56,7 @@ label start:
     pause(0.5)  
 
     #====тестовые блоки
+    #call test_shop_job
     #"hhhhh1"
     #image boss_img = "images/boss bad.png"    
     #"вот сейчас выведу сцуко картинку"
