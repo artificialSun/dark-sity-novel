@@ -212,10 +212,11 @@ label start_game_shop_job:
             #"aaa"
             if mouse_in_bag:
                 $ renpy.say("Покупатель", "О боже! Это же мышь! МЫШЬ В МОЕЙ ПОКУПКЕ!!!")
-                $ renpy.say("Покупатель", "Прямо коробке, куда вы мне все сложили!!!")
-                $ renpy.say("Покупатель", "ААААААААААААААА!!!")
+                $ renpy.say("Покупатель", "Прямо в корзине, куда вы мне все сложили!!!")
+                $ renpy.say("Покупатель", "ААААААААААААААА!!! УБЕРИТЕ ЕЕ ОТ МЕНЯ!")
                 boss "Эй, [my_name]! Там на тебя жалуются!"
                 $ renpy.notify("Списан мышиный штраф 30$")
+                $ change_stat("g", -1)
                 $ mouse_in_bag = False
         $ my_can_skip_work["shop"] = True
         if mistakes_total == 0:
