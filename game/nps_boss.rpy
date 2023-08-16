@@ -12,10 +12,16 @@ init:
 
 label init_boss:
     if my_boss_kind == boss_kind["bad"]:
-        $ boss_img_path = "images/boss bad.png"
+        if my_job == "morg":
+            $ boss_img_path = "images/boss bad.png"
+        else:
+            $ boss_img_path = "images/boss bad shop.png"
         #"тестовая запись плохой"
     else:
-        $ boss_img_path = "images/boss good.png"
+        if my_job == "morg":
+            $ boss_img_path = "images/boss good.png"
+        else:
+            $ boss_img_path = "images/boss good shop.png"
         #"тестовая запись хороший"
     image boss_img = "[boss_img_path]"
     return
