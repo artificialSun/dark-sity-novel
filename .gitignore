@@ -8,3 +8,5 @@ traceback.txt
 game/saves/
 game/cache/shaders.txt
 game/cache/
+*~*
+*.bak

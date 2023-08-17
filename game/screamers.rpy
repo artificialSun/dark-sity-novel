@@ -14,46 +14,58 @@ label day1_day_dream:
     "...неправильность..."
 
     #show ghost_day_dream1 #align(0.5, 0.5)
-    show ghost_day_dream_in_mirrow1 at ghost_appear
+    show ghost_day_dream_in_mirror1 at ghost_appear
     pause(6.0)
     ""
-    show ghost_day_dream_in_mirrow2 at ghost_appear
+    show ghost_day_dream_in_mirror2 at ghost_appear
+    pause 0.5
+    show ghost_day_dream_in_mirror2 at ghost_appear
     #show "images/screamer1/ghost_s1_2.png" at ghost_appear
     ""
     ""
-    hide ghost_day_dream_in_mirrow1 with dissolve
-    hide ghost_day_dream_in_mirrow2 with dissolve
+    hide ghost_day_dream_in_mirror1 with dissolve
+    hide ghost_day_dream_in_mirror2 with dissolve
     ""
     ""
-    show ghost_day_dream_in_room
+    show ghost_day_dream_in_room 
     ""
     hide ghost_day_dream_in_room
 
-    ""
-    show ghost_day_dream_screamer1 at fast_horror_blink
+    #"сейчас"
+    show ghost_day_dream_screamer1 at fast_horror_blink2 
+    #test_blink 
+    # fast_horror_blink
+    pause 1.5
+    show ghost_day_dream_skull1 at skull_appear
+    show ghost_day_dream_skull2 at skull_appear, skull2_cick
+
+    #show ghost_day_dream_screamer1 at fast_horror_blink
     ""
     ""
 
     "fdhgkhs"
     return
 
-image ghost_day_dream_in_mirrow1 = "images/screamer1/ghost_s1_1.png" 
-image ghost_day_dream_in_mirrow2 = "images/screamer1/ghost_s1_2.png" 
+image ghost_day_dream_in_mirror1 = "images/screamer1/ghost_s1_1.png" 
+image ghost_day_dream_in_mirror2 = "images/screamer1/ghost_s1_2.png" 
+image ghost_day_dream_skull1 = "images/screamer1/ghost_s1_skull1.png"
+image ghost_day_dream_skull2 = "images/screamer1/ghost_s1_skull2.png"
 
 image ghost_day_dream_in_room:
     "images/screamer1/ghost_s1_3.png" 
     align (0.535, 0.7)
+    #xpos 530 ypos 100
     alpha 0  
     linear 0.05 alpha 1.0
     1
     zoom 1.3
-    align (0.535, 1)
+    #align (0.535, 1)
     1
     zoom 1.7
-    align (0.535, 1)
+    #align (0.535, 1)
     1
     zoom 2.4
-    align (0.535, 1)
+    #align (0.535, 1)
     1
     linear 2 alpha 0.0
     #3
@@ -72,17 +84,39 @@ image ghost_day_dream_in_room:
 
 image ghost_day_dream_screamer1: 
     "images/screamer1/ghost_s1_3.png" 
-    zoom 3.5
-    align (0.535, -2)
+    xpos 150
+    ypos -100
+    zoom 3.5   
+    #xpos 650
+    #ypos 2000
     
 
-image ghost_day_dream_mask:
-    "images/screamer1/ghost_s1_3.png" 
+transform skull_appear:
+    xpos 530
+    ypos 35
+    zoom 0.54
+    alpha 0
+    linear 2 alpha 1.0
+    pause 1
+    #anchor(0.5, 0.5)
+    zoom 1.7 xpos 330 ypos -120 
+    pause 0.2
+    alpha 0
+    pause 0.05
+    alpha 1
+    pause 0.2
+    alpha 0
 
-#align(0.5, 0.5)
 
-    #rotate 0
-    #leaner 5 rotate 360
+transform skull2_cick:    
+    ypos 35
+    linear 0.5 ypos 60 
+    pause 0.2   
+    linear 0.05 ypos 35
+    pause 0.3
+    linear 0.05 ypos 40 
+    pause 0.2   
+    linear 0.05 ypos 35
 
 
 transform ghost_appear:
@@ -92,6 +126,53 @@ transform ghost_appear:
     5
 
 
+transform test_blink:
+    xpos 650
+    ypos 2000
+    linear 5 alpha 0.0
+    linear 5 alpha 1.0
+    repeat
+
+transform fast_horror_blink2:
+    block:
+        alpha 0.98
+        pause 0.06
+        alpha 0.2
+        pause 0.02
+        alpha 0.9
+        pause 0.01
+        alpha 0.1
+        pause 0.09
+        alpha 0.8
+        pause 0.02
+        alpha 0.9
+        pause 0.07
+        alpha 0.7
+        pause 0.01
+        alpha 0.9
+        pause 0.01
+        alpha 0.6
+        pause 0.06
+        alpha 0.3
+        pause 0.07
+        alpha 0.9
+        pause 0.01
+        alpha 0.1
+        pause 0.03
+        alpha 0.99
+        pause 0.09
+        alpha 0.87
+        pause 0.01
+        alpha 0.94
+        pause 0.09
+        alpha 0.65
+        pause 0.04
+        alpha 0.3
+        pause 0.07
+        alpha 0.98
+        pause 0.5
+        repeat 3
+    linear 1 alpha 0
 
 transform fast_horror_blink():
     alpha 0.3
@@ -149,7 +230,7 @@ init -1:
     default get_rand_value = 0
 init -1 python:
     def get_rand1(trans,st,at):
-        store.get_rand_value = renpy.random.random()
+        #store.get_rand_value = renpy.random.random()
         return None
 
 
