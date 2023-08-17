@@ -239,7 +239,7 @@ screen morg_notice():
 
 ### метка запускается непосредственно перед началом или пропуском мини-игры
 label start_game_morg:
-    call init_morg_mini_game #инициализация или обнуление начальны переменных
+    call init_morg_mini_game from _call_init_morg_mini_game #инициализация или обнуление начальны переменных
     ## XX поправить текст вводный
     #"текст текст текст"
    
@@ -314,10 +314,10 @@ label morg_first_day:
             "Как же я это все ненавижу! Холод и смрад, уродливые тела, которых надо перепаковывать и записывать их гребанные имена"
     
     scene bg coridor with fade
-    call job_first_day_boss_dialog1
+    call job_first_day_boss_dialog1 from _call_job_first_day_boss_dialog1
 
     "Переодеваюсь в рабочую одежду"
-    call start_game_morg
+    call start_game_morg from _call_start_game_morg
             
     return
         

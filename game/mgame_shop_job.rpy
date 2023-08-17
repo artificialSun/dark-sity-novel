@@ -1,5 +1,5 @@
 init:
-    define shop_job_items = [_("Ножницы"), _("Тарелка картошки"), _("Виски"), _("Овощи"), _("Бутерброд"), _("Коробка конфеты"), _("Хлеб"), _("Продолговатые штуки"), _("Молоко"), _("Сыр")]
+    define shop_job_items = [_("Ножницы"), _("Тарелка картошки"), _("Виски"), _("Овощи"), _("Бутерброд"), _("Коробка конфет"), _("Хлеб"), _("Продолговатые штуки"), _("Молоко"), _("Сыр")]
      
 
 #####################################################################################################################################################################
@@ -9,8 +9,6 @@ screen shop_mini_game():
 
     imagemap:
         ground "images/job/bg shop_inside.jpg"
-
-    default tt = Tooltip("Ни одна область не выбрана")
     
     style_prefix "shop" 
 
@@ -27,11 +25,14 @@ screen shop_mini_game():
                                 imagebutton:
                                     idle "job/shop_mouse.jpg"
                                     hover "job/shop_mouse_hover.jpg"
+                                    tooltip "МЫШЬ НА ПРОДУКТЕ" 
                                     action Function(mouse_run)
                             else:
                                 imagebutton:                          
                                     idle "job/shop_item_"+str(i)+".jpg" 
-                                    hovered tt.Action(shop_job_items[i])                                             
+                                    tooltip shop_job_items[i] 
+                                    action [SetDict(shop_job_items_count_user, i, shop_job_items_count_user[i]+1), Function(randomouse)]                                                                            
+
                     hbox:
                         imagebutton:
                             idle "gui/my_button/but_back.png"
@@ -74,6 +75,17 @@ screen shop_mini_game():
                     xalign 0.5
                     textbutton "ЗАКАЗ СОБРАН" align(0.5, 0.05) action [Hide("shop_mini_game"), Function(check_shop_list)]
 
+
+    $ tooltip = GetTooltip()
+
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            prefer_top True
+            frame:
+                padding (5, 5)
+                align (0.5, 0.5)
+                text tooltip
 
 
 #################### 2 экран
@@ -150,6 +162,7 @@ init python:
         if mistakes > 0 :
             renpy.notify("Вы ошиблись при выдаче товара. Штраф " + str(shtraf) + "$")
             mistakes_total += mistakes
+            zp -= shtraf
             mistakes = 0 #обнулили ошибки за текущий заказ после подсчета
         else:
             renpy.notify("Вы молодец, начальник вами доволен!")
@@ -182,7 +195,7 @@ label do_you_can_skip_work(workname):
 
 
 label start_game_shop_job:
-    call init_shop_mini_game
+    call init_shop_mini_game from _call_init_shop_mini_game
     if my_can_skip_work["shop"]:  #проверяем, первый раз игрок на эту работу пришел или нет
         "Пропустить мини-игру?"
         menu:
@@ -198,10 +211,11 @@ label start_game_shop_job:
     else:
         show screen info_many_strings(["Эта мини-игра представляет собой один ваш рабочий день.","", "В следующий раз вы сможете ее пропустить","и получить примерно ту же зарплату за то же время","или сыграть заново, чтобы улучшить результат."])
         
-        "Я переодеваюсь в фартук. Пора работать."
+        "Пора работать."
         show me_big at right
         "Мерзкие мыши! Опять эти твари повсюду!"
         "Я должен правильно собрать заказ. Если мышь сидит на товаре, который входит в список покупателя, ее нужно прогнать!" 
+        hide me_big
             
         while work_hours < workhours_in_day["shop"]:                        
             $ reload_shop_job() 
@@ -258,7 +272,7 @@ label shop_first_day:
     "К счастью, публика здесь довольно приличная. Хороший район."
     menu:
         "Я люблю свою работу":
-            "У нас здесь отличная точка, приличный район, покупатели отзывчивые. Я отлично знаю некоторых, они приходят каждый день."
+            "У нас здесь отличная точка, уютный квартал, покупатели отзывчивые. Я знаю некоторых, они приходят каждый день."
             "Но в последнее время у нас расплодилась семейка мышей, никак не можем вытравить"
             "Прямо напасть какая-то! Приходится их едва ли не из корзины с собранными для клиента покупками выгребать!"
         "Я ненавижу своб работу":
@@ -267,10 +281,10 @@ label shop_first_day:
             "Как же я это все ненавижу! Как только замаячит что получше, сразу пошлю всех к дьяволу!"
     
     scene bg shop_inside with fade
-    call job_first_day_boss_dialog1_shop
+    call job_first_day_boss_dialog1_shop from _call_job_first_day_boss_dialog1_shop
 
     "Переодеваюсь в рабочую одежду"
-    call start_game_shop_job
+    call start_game_shop_job from _call_start_game_shop_job
             
     return
         

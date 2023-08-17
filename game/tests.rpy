@@ -2,7 +2,7 @@ label test_shop_job:
     "тестирование магазина"
     $ my_can_skip_work["shop"] = False
     $ my_name = "Фрэнк"
-    call start_game_shop_job
+    call start_game_shop_job from _call_start_game_shop_job_1
     #show screen shop_mini_game
     #"почему мы продаем ножницы в бакалее?"
     return
@@ -15,7 +15,7 @@ label test_morg_first_day:
     $ t = my_job_timemark.get_time
     $ global_time.add_time("h", 3)
     $ my_boss_kind = boss_kind["good"]
-    call morg_first_day
+    call morg_first_day from _call_morg_first_day_1
     return
 
 

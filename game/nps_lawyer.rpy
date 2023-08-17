@@ -23,7 +23,7 @@ label nps_adv_meet:
     menu:
         "Подойти":
             "Подхожу и как раз успеваю придержать за руку"
-            call change_stat('g', 1)            
+            call change_stat('g', 1) from _call_change_stat            
             "Он поднимает на меня мутноватый взгляд"
 
             show adv alco
@@ -47,10 +47,10 @@ label nps_adv_meet:
 
                     menu:            
                         "Пошарить у него в карманах":
-                            call change_stat('b', 2)
+                            call change_stat('b', 2) from _call_change_stat_1
                             $ sum = renpy.random.randint(200,500)
                             "Оу, [sum]$, неплохо"
-                            call change_stat('m', sum)
+                            call change_stat('m', sum) from _call_change_stat_2
 
                         "Оставить в покое":
                             "Пожалуй, оставлю его в покое"
@@ -59,12 +59,12 @@ label nps_adv_meet:
                 "Проводить до дома":
                     "С большим трудом мне удается выяснить адрес мужчины. Похоже, он практикующий адвокат"
                     $ adv.rel = adv.rel + 20
-                    call change_stat('g', 2)
+                    call change_stat('g', 2) from _call_change_stat_3
                     $ renpy.notify("Теперь у вас есть знакомый адвокат")
 
                 "Завести в ближайшую подворотню":
                     "Хм, пожалуй я и стану тем, кто устроит неприятности этому парню"
-                    call change_stat('r', 1)
+                    call change_stat('r', 1) from _call_change_stat_4
                     jump adv_robbery
 
         "Пройти мимо":
@@ -90,12 +90,12 @@ label adv_robbery:
         "Ограбить":
             "А теперь просто отдай мне свои деньги. Живо!"
             $ adv.rel -= 20
-            call change_stat('b', 1)
+            call change_stat('b', 1) from _call_change_stat_5
 
             if stat_bad > min_stat_bad_luck:
                 $ adv.rel -= 10
                 adv "Забирай! Все забирай!"
-                call change_stat('b', 1)
+                call change_stat('b', 1) from _call_change_stat_6
 
             else:
                 adv "Ничего ты не получишь, долбаный мудак!"

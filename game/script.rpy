@@ -40,7 +40,7 @@ return
 label start:
     scene bg city
 
-    call init_global_timer
+    call init_global_timer from _call_init_global_timer
 
 #tests
     #call test_morg_first_day     
@@ -56,6 +56,9 @@ label start:
     pause(0.5)  
 
     #====тестовые блоки
+    #call animation_test
+
+    call day1_day_dream
     #call test_shop_job
     #"hhhhh1"
     #image boss_img = "images/boss bad.png"    
@@ -77,9 +80,9 @@ label start:
     $ renpy.notify("Твое приключение начинается здесь, но сначала выбери персонажа")
     pause(1.0)
 
-    call init_my_character
+    call init_my_character from _call_init_my_character
 
-    call init_inventoryes
+    call init_inventoryes from _call_init_inventoryes
 
     
 
@@ -92,12 +95,12 @@ label start:
 
     menu:
         "Зайти в казино":
-            call go_casino
+            call go_casino from _call_go_casino_2
         "Продолжить путь":            
             me "Сегодня я уже достаточно потратил денег"
 
     
-    call ep_alice
+    call ep_alice from _call_ep_alice
 
 
     
