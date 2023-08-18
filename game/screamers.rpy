@@ -26,8 +26,9 @@ label day1_day_dream:
     hide ghost_day_dream_in_mirror1 with dissolve
     hide ghost_day_dream_in_mirror2 with dissolve
     ""
-    ""
+    "ghost in room"
     show ghost_day_dream_in_room 
+    $ renpy.pause(3.0, hard = True)
     ""
     hide ghost_day_dream_in_room
 
@@ -52,35 +53,31 @@ image ghost_day_dream_skull1 = "images/screamer1/ghost_s1_skull1.png"
 image ghost_day_dream_skull2 = "images/screamer1/ghost_s1_skull2.png"
 
 image ghost_day_dream_in_room:
-    "images/screamer1/ghost_s1_3.png" 
-    align (0.535, 0.7)
-    #xpos 530 ypos 100
-    alpha 0  
-    linear 0.05 alpha 1.0
-    1
+    "images/screamer1/ghost_s1_3.png"
+    #alpha 0.0
+    alpha 0.4
+    zoom 0.7    
+    anchor(0.5, 0.5)
+    xpos 620 ypos 400
+    #linear 0.05 alpha 0.2
+    1.3
     zoom 1.3
-    #align (0.535, 1)
+    alpha 0.5
+    ypos 500
     1
+    alpha 0.6    
     zoom 1.7
-    #align (0.535, 1)
+    ypos 600
     1
+    alpha 0.7
     zoom 2.4
-    #align (0.535, 1)
+    ypos 700
     1
-    linear 2 alpha 0.0
-    #3
-    #zoom 3.5
-    #align (0.535, -2)    
-    #alpha 1.0
-    #0.1
-    #alpha 0.5
-    #0.01
-    #alpha 0.9  
-    #0.02
-    #alpha 0.3 
-    #0.01
-    #alpha 0.1   
-    #5
+    linear 2 alpha 0.0 
+
+
+transform ghost_day_dream_in_room_appear:
+    
 
 image ghost_day_dream_screamer1: 
     "images/screamer1/ghost_s1_3.png" 
@@ -97,15 +94,23 @@ transform skull_appear:
     zoom 0.54
     alpha 0
     linear 2 alpha 1.0
-    pause 1
+    linear 0.5 alpha 0.0
+    pause 2.5
     #anchor(0.5, 0.5)
-    zoom 1.7 xpos 330 ypos -120 
+    anchor(0.5, 0.5)
+    zoom 3 xpos 550 ypos 300
     pause 0.2
     alpha 0
-    pause 0.05
+    pause 0.05    
     alpha 1
-    pause 0.2
+    pause 0.1    
+    linear 0.1 rotate -4
     alpha 0
+    pause 0.07
+    alpha 1
+    pause 0.3
+    alpha 0
+
 
 
 transform skull2_cick:    

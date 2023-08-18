@@ -57,7 +57,7 @@ label start:
 
     #====тестовые блоки
     #call animation_test
-
+    call test_eye
     call day1_day_dream
     #call test_shop_job
     #"hhhhh1"

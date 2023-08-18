@@ -1,3 +1,16 @@
+# The game starts here.
+label test_eye:
+
+    scene bg london
+    "Заснул..."
+    scene black with circleirisin
+    "..."
+    scene black with vpunch
+    "Проснулся от удара."
+    scene bg london with circleirisout
+    "?"
+    return
+
 label test_shop_job:
     "тестирование магазина"
     $ my_can_skip_work["shop"] = False
