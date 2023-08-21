@@ -1,9 +1,18 @@
 # The game starts here.
+label test_morgnul:
+    scene my_room with eyeopen
+    pause(0.2)
+    scene black with eyeclose
+    pause(1.0)
+    scene my_room with eyeopen
+    "проснулся..."
+
+
 label test_eye:
 
     scene bg london
     "Заснул..."
-    scene black with circleirisin
+    scene black with eyeopen
     "..."
     scene black with vpunch
     "Проснулся от удара."

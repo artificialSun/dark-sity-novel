@@ -1,5 +1,9 @@
 label ep001_wakeup:
-    scene my_room 
+    scene my_room with eyeopen
+    pause(0.2)
+    scene black with eyeclose
+    pause(1.0)
+    scene my_room with eyeopen
     
     "{i}Маленькая квартирка на окраине города пропахла дымом сигарет и квашенной капустой должно быть еще со времен прошлого владельца. {/i}"
     '{i}Из окна открывается "восхитительный" вид на промышленный район.{/i}'
@@ -32,9 +36,11 @@ label ep001_wakeup:
             $ global_time.add_time("m", pospal) 
             $ change_stat("md", 8) 
             "Поворачиваюсь на другой бок и закрываю глаза"
+            scene black with eyeclose
             ".................................................................."
+            scene my_room with eyeopen
             show me_big at left
-            with fade
+            with dissolve
             me "Вот так намного лучше!"
 
     show me_big at left
