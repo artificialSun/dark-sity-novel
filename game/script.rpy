@@ -6,22 +6,20 @@ label init_my_character:
     label choice_my_character:   #выбор внешности игрокаR               
         menu:        
             "парень" :
-                show me man at left  
+                show me man normal at left  
                 $ choice = "молодого"       
                 $ my_type = "man"  
-                #$ stat_money = 250  
                 $ room1_secret_money = 250 #деньги в тайнике, которые гг сможет забрать
             "старик":
-                show me oldman at right
+                show me oldman normal at right
                 $ choice = "пожилого" 
                 $ my_type = "oldman"  
-                #$ stat_money = 1000
-                $ room1_secret_money = 1000
+                $ room1_secret_money = 500
             "подтвердить выбор":
                 hide me with fade  
                 $ renpy.notify ("Вы выбрали " + str(choice))
-                image me_img = "images/me "+"[my_type]" + ".png"
-                image me_big = "images/me "+"[my_type]" + " big.png"
+                #image me_img = "images/me "+"[my_type]" + ".png"
+                #image me_big = "images/me "+"[my_type]" + " big.png"
                 jump choice_my_name
         jump choice_my_character
     return    
@@ -56,9 +54,13 @@ label start:
     pause(0.5)  
 
     #====тестовые блоки
-    #call animation_test    
+    call test_big_info_panel
 
-    call day1_day_dream
+    #call animation_test  
+
+    #call test_me_show  
+
+    #call day1_day_dream
 
     #call test_shop_job
     #"hhhhh1"

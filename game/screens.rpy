@@ -1677,4 +1677,68 @@ screen info_many_strings(text_array):
             textbutton "ОК" action Hide("info_many_strings") align (0.5, 0.5)
     
 
-    
+## Экран BIG_info_panel ###################################################################
+##
+## Этот экран используется когда игроку нужно посмотреть все свои статы
+##
+##  
+default testval = 50
+default testval_max = 80
+
+
+screen big_info_panel:
+    modal True
+
+    hbox:
+        frame:
+            align(0.0, 1.0)
+            if my_type =="man":
+                text "{image=images/me/me man big.png}"
+            else:
+                text "{image=images/me/me oldman big.png}"
+        null width 10
+
+        vbox:
+            null height 10
+            hbox:
+                text "БЕЗУМИЕ" align(0.05, 0.5)
+                null width 10
+                bar:
+                    xsize 550
+                    ysize 40
+                    align (0.5, 0.5)
+                    value AnimatedValue(value = (stat_mind + stat_mad_max), range = (stat_mind_max + stat_mad_max) )
+                    left_bar Frame("gui/bar/left.png", 10, 10) 
+                    right_bar Frame("gui/bar/right.png", 10, 10) 
+                null width 10
+                text "РАЗУМ" align(0.95, 0.5)
+            null height 10
+            hbox:
+                vbox:
+                    hbox:
+                        text "ЗДОРОВЬЕ"
+                        null width 10
+                        bar:
+                            xsize 350
+                            ysize 40
+                            align (0.5, 0.5)
+                            value AnimatedValue(value = stat_health, range = stat_health_max)
+                            left_bar Frame("gui/bar/left.png", 10, 10) 
+                            right_bar Frame("gui/bar/right.png", 10, 10) 
+                    null height 10
+                    frame:
+                        vbox:
+                            text "СИЛА: [stat_strong]"
+                            text "РАЦИОНАЛЬНОСТЬ: [stat_ratio]"
+                            text "ХОРОШАЯ РЕПУТАЦИЯ: [stat_good]"
+                            text "ДУРНАЯ СЛАВА: [stat_bad]"
+                vbox:
+                    frame:
+                        ysize 300
+                        text "Здесь будет инвентарь и журнал"
+
+    frame:
+        align((0.05, 0.05))
+        textbutton "Ок" action Hide("big_info_panel")
+
+

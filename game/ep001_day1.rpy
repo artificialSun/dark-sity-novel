@@ -39,11 +39,13 @@ label ep001_wakeup:
             scene black with eyeclose
             ".................................................................."
             scene my_room with eyeopen
-            show me_big at left
+            #show me_big at left
+            $ show_me("big", left)
             with dissolve
             me "Вот так намного лучше!"
 
-    show me_big at left
+    #show me_big at left
+    $ show_me("big", left)
     with fade
 
     # поменять сравнение времени
@@ -127,6 +129,9 @@ label ep001_wakeup:
     "Мне пора, потом разберусь."
     "Прячу записку в карман"
 
+    #jump ep001_gostreet
+
+label ep001_gostreet:
     scene bg london with fade
     show rain
 
@@ -145,11 +150,13 @@ label ep001_wakeup:
                 call go_casino from _call_go_casino
                 jump .go_menu
 
+            "Вернуться домой":
+                jump ep001_gohome_intead_work
+
             "Пойти куда-то еще":
                 #[] здесь должны быть другие варианты
                 "На работу, сцуко иддди!"
-                jump ep001_gowork
-                        
+                jump ep001_gowork 
 
     return
 
@@ -202,5 +209,60 @@ label ep001_gowork:
             "Пойти домой":
                 "Пойду домой. Хватит на сегодня развлечений."     
         
-return                
+    return    
+
+
+
+#========================================
+label ep001_gohome_intead_work:
+    "Я прохожу пару улиц, но тут вдруг понимаю, что "
+    menu:
+        "Что-то забыл":
+            "Такое ощущение, что забыл что-то важное, оно мне очень сегодня понадобится!"
+        "Не хочу идти на работу":
+            "я иду совсем не в ту сторону... Вот уже минут 15 как..."
+            $ global_time.add_time("m", 15)
+            "Мне нездоровится"
+            $ change_stat("h", -20)
+            $ change_stat("md", -20)
+            $ change_stat("r", -1)
+            "Хотя может тому виной мое ярое нежелание работать."
+            "Нужно сходить к психотерапевту"
+            "Но когда-нибудь потом..."
+            "А вот и мой дом"
+    
+    $ global_time.add_time("m", 15)
+    scene my_room with fade
+    $ show_me("big")
+    "Вот я и дома. Как будто не выходил."
+
+    label .home_menu:
+        menu:
+            "Проверить тайник":
+                "Функция не работает"
+                jump .home_menu
+            "Пойти на работу":
+                "Хм. Все-таки пойду поработаю."
+                jump ep001_gostreet
+            "Лечь спать":
+                "Мне не очень хорошо."
+                "Голова болит"
+                "Пойду прилягу, попробую заснуть"
+                scene black with eyeclose
+                pause(1.0)
+                call day1_day_dream #сон со скримером в файле screamers
+                $ global_time.add_time("h", 6)
+        
+    scene my_room with eyeopen
+    ""
+    "Твою мать, что это вообще было???"
+    "Дневной сон явно не пошел на пользу"
+    $ show_me("big")
+    $ change_stat("md", -5)
+    "Голова раскалывается"
+    return
+            
+
+
+
 

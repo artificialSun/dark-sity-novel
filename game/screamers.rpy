@@ -7,16 +7,19 @@ screen screamer_day_dream1:
 
 
 label day1_day_dream:
-    scene bg old_room_mirror with fade #(2)
-
-    "Комната кажется смутно знакомой" 
+    scene bg old_room_mirror with fade 
+    #(2)    
+    "Эта комната... как будто бы не было всех этих лет..."
+    "Все такое знакомое..." 
+    "Мертвенная тишина вокруг"
+    "...не к добру..."
+    "...тревожно..."
     ""
-    "...неправильность..."
-
+    "...какая-то неправильность..."
     #show ghost_day_dream1 #align(0.5, 0.5)
     show ghost_day_dream_in_mirror1 at ghost_appear
-    pause(6.0)
-    ""
+    $ renpy.pause(6.0, hard = True)
+    "...это еще что за хрень?.."
     show ghost_day_dream_in_mirror2 at ghost_appear
     pause 0.5
     show ghost_day_dream_in_mirror2 at ghost_appear
@@ -26,25 +29,28 @@ label day1_day_dream:
     hide ghost_day_dream_in_mirror1 with dissolve
     hide ghost_day_dream_in_mirror2 with dissolve
     ""
-    "ghost in room"
+    "...нужно уйти отсюда..."
+    ""
     show ghost_day_dream_in_room 
     $ renpy.pause(3.0, hard = True)
     ""
     hide ghost_day_dream_in_room
-
+    ""
+    "...ноги не слушаются..."
+    ""
+    ""
     #"сейчас"
     show ghost_day_dream_screamer1 at fast_horror_blink2 
     #test_blink 
     # fast_horror_blink
-    pause 1.5
+    $ renpy.pause(1.5, hard = True)
     show ghost_day_dream_skull1 at skull_appear
     show ghost_day_dream_skull2 at skull_appear, skull2_cick
-
+    $ renpy.pause(2, hard = True)
     #show ghost_day_dream_screamer1 at fast_horror_blink
     ""
     ""
-
-    "fdhgkhs"
+    ""
     return
 
 image ghost_day_dream_in_mirror1 = "images/screamer1/ghost_s1_1.png" 

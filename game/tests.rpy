@@ -1,5 +1,11 @@
-# The game starts here.
+label test_big_info_panel:
+    "тестируем панель информации"    
+    show screen big_info_panel
+    "вот она!"
+
+####################
 label test_morgnul:
+    "тест медленного моргания от 1го лица"
     scene my_room with eyeopen
     pause(0.2)
     scene black with eyeclose
@@ -9,7 +15,7 @@ label test_morgnul:
 
 
 label test_eye:
-
+    "тест закрытия и открытия глаз от первого лица"
     scene bg london
     "Заснул..."
     scene black with eyeopen

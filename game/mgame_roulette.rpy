@@ -206,7 +206,8 @@ label go_casino:
     hide juli 
     with dissolve
 
-    show me_big at left
+    #show me_big at left
+    $ show_me("big")
     with dissolve
     me "Пожалуй воздержусь"
 
