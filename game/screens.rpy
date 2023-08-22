@@ -1708,8 +1708,8 @@ screen big_info_panel:
                     ysize 40
                     align (0.5, 0.5)
                     value AnimatedValue(value = (stat_mind + stat_mad_max), range = (stat_mind_max + stat_mad_max) )
-                    left_bar Frame("gui/bar/left.png", 10, 10) 
-                    right_bar Frame("gui/bar/right.png", 10, 10) 
+                    left_bar Frame("gui/bar/md_left.png", 10, 10) 
+                    right_bar Frame("gui/bar/md_right.png", 10, 10) 
                 null width 10
                 text "РАЗУМ" align(0.95, 0.5)
             null height 10
@@ -1723,8 +1723,8 @@ screen big_info_panel:
                             ysize 40
                             align (0.5, 0.5)
                             value AnimatedValue(value = stat_health, range = stat_health_max)
-                            left_bar Frame("gui/bar/left.png", 10, 10) 
-                            right_bar Frame("gui/bar/right.png", 10, 10) 
+                            left_bar Frame("gui/bar/hl_left.png", 10, 10) 
+                            right_bar Frame("gui/bar/hl_right.png", 10, 10) 
                     null height 10
                     frame:
                         vbox:
