@@ -130,7 +130,7 @@ init python:
 
     class Item(object):
 
-        def __init__(self, name, cost = 0, unique = False): #, item_type = Item_types.either):
+        def __init__(self, name, img, cost = 0, unique = False, isMoney = False, isWeapon = False, isCure = False): #, item_type = Item_types.either):
             self.name = name
             self.unique = unique
             self.cost = cost
@@ -142,17 +142,23 @@ init python:
             
 
 #==================ВСЕ ИГРОВЫЕ ПРЕДМЕТЫ
+    items_images_path = "images/items/"
     all_items_dict = {
-        "money":        Item(_("деньги"), 0, False),# Item_types.money),
-        "myDagger":     Item(_("старинный кинжал"), 7000, True),# Item_types.weapon),
-        "cureSleep":    Item(_("таблетка от бессонницы"), 1, False,)# item_type = Item_types.food)
+        "money":        Item(_("деньги"), img = items_images_path + "item_money.jpg", isMoney = True),# Item_types.money),
+        "myDagger":     Item(_("старинный кинжал"), img = items_images_path + "item_vintage_dagger.jpg", cost = 7000, unique = True, isWeapon = True),# Item_types.weapon),
+        "cureSleep":    Item(_("таблетка от бессонницы"), img = items_images_path + "item_sleepCure1.jpg", cost = 10, isCure = True)# item_type = Item_types.food)
 
     }
 
 
 
 #=================================================
-#screen 
+#screen myInventory:
+
+    #hbox:
+
+
+    
 
 
 

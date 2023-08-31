@@ -1689,18 +1689,22 @@ default testval_max = 80
 screen big_info_panel:
     modal True
 
-    hbox:
-        frame:
-            align(0.0, 1.0)
+    imagemap:
+        ground "images/dark_screen.png"
+
+    hbox: # контейнер с картинкой персонажа
+        #frame:
+        hbox:
+            align(0.0, 1.3)
             if my_type =="man":
                 text "{image=images/me/me man big.png}"
             else:
                 text "{image=images/me/me oldman big.png}"
         null width 10
 
-        vbox:
-            null height 10
-            hbox:
+        vbox: # контейнер со всей остальной информацией
+            null height 40
+            hbox: # контейнер с треком разума/безумия
                 text "БЕЗУМИЕ" align(0.05, 0.5)
                 null width 10
                 bar:
