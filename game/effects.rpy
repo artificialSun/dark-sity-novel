@@ -25,6 +25,15 @@ label add_rain:
     return
 
 
+# белый шум виньетка
+image noise1:    # виньетка, ровный по времени
+    "images/effects/ef_noise1.png"
+    0.2
+    "images/effects/ef_noise2.png"
+    0.2
+    repeat
+
+
 # переход с открытием глаз
 init:
     # Imagedissolve Transitions.

@@ -1729,6 +1729,8 @@ screen big_info_panel:
                             value AnimatedValue(value = stat_health, range = stat_health_max)
                             left_bar Frame("gui/bar/hl_left.png", 10, 10) 
                             right_bar Frame("gui/bar/hl_right.png", 10, 10) 
+
+                            tooltip str(stat_health) + "/" + str(stat_health_max) # не работает
                     null height 10
                     frame:
                         vbox:
